@@ -42,6 +42,20 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
+  const summarizedData = Object.values(data.reduce((acc: Record<string, PickingData>, item) => {
+    const key = `${item.kategori}-${item.kriteria}`;
+    if (!acc[key]) {
+      acc[key] = { ...item };
+    } else {
+      acc[key].allocated += item.allocated;
+      acc[key].pickingConfirmed += item.pickingConfirmed;
+      acc[key].printed += item.printed;
+      acc[key].waiting += item.waiting;
+      acc[key].grandTotal += item.grandTotal;
+    }
+    return acc;
+  }, {} as Record<string, PickingData>)) as PickingData[];
+
   const totals = data.reduce((acc, item) => ({
     allocated: acc.allocated + item.allocated,
     picking: acc.picking + item.pickingConfirmed,
@@ -51,37 +65,37 @@ export default function App() {
   }), { allocated: 0, picking: 0, printed: 0, waiting: 0, total: 0 });
 
   return (
-    <div className="h-screen bg-slate-50 p-6 font-sans flex flex-col gap-5 text-slate-900 overflow-hidden">
+    <div className="h-screen bg-slate-50 p-4 font-sans flex flex-col gap-3 text-slate-900 overflow-hidden">
       {/* Header Section */}
-      <header className="flex items-center justify-between border-b border-slate-200 pb-4">
+      <header className="flex items-center justify-between border-b border-slate-200 pb-2">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-emerald-600 rounded flex items-center justify-center shadow-sm">
-            <LayoutDashboard className="w-6 h-6 text-white" />
+          <div className="w-8 h-8 bg-emerald-600 rounded flex items-center justify-center shadow-sm">
+            <LayoutDashboard className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-slate-800">Picking Status Dashboard</h1>
-            <p className="text-xs text-slate-500 flex items-center gap-2">
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <h1 className="text-lg font-bold tracking-tight text-slate-800 leading-tight">Picking Status Dashboard</h1>
+            <p className="text-[10px] text-slate-500 flex items-center gap-2">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
               Live Feed: Google Sheets Sync
             </p>
           </div>
         </div>
         
         <div className="flex items-center gap-2">
-          <div className="px-3 py-1.5 bg-white border border-slate-200 rounded text-[10px] font-bold text-slate-400 uppercase tracking-widest shadow-sm">
+          <div className="px-2 py-1 bg-white border border-slate-200 rounded text-[9px] font-bold text-slate-400 uppercase tracking-widest shadow-sm">
             Last Sync: {lastUpdated.toLocaleTimeString()}
           </div>
           <button 
             onClick={loadData}
             disabled={loading}
-            className="p-2 bg-slate-800 text-white rounded shadow-sm hover:bg-slate-700 transition-colors disabled:opacity-50"
+            className="p-1.5 bg-slate-800 text-white rounded shadow-sm hover:bg-slate-700 transition-colors disabled:opacity-50"
           >
-            <RefreshCw className={loading ? "animate-spin" : ""} size={16} />
+            <RefreshCw className={loading ? "animate-spin" : ""} size={14} />
           </button>
         </div>
       </header>
 
-      <main className="flex-grow flex flex-col gap-5">
+      <main className="flex-grow flex flex-col gap-3">
         <AnimatePresence mode="wait">
           {error ? (
             <motion.div 
@@ -110,7 +124,7 @@ export default function App() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="space-y-5 flex-grow flex flex-col overflow-hidden"
+              className="space-y-3 flex-grow flex flex-col overflow-hidden"
             >
               {/* KPI Grid */}
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4 shrink-0">
@@ -128,17 +142,17 @@ export default function App() {
                   className="bg-blue-50 border-blue-200 text-blue-700"
                 />
                 <StatCard 
-                  title="Picking" 
+                  title="QC" 
                   value={totals.picking} 
                   icon={CheckCircle2} 
-                  description="Status: Picking"
+                  description="Status: QC"
                   className="bg-emerald-50 border-emerald-200 text-emerald-700"
                 />
                 <StatCard 
-                  title="Printed" 
+                  title="Picking" 
                   value={totals.printed} 
                   icon={Printer} 
-                  description="Status: Printed"
+                  description="Status: Picking"
                   className="bg-indigo-50 border-indigo-200 text-indigo-700"
                 />
                 <StatCard 
@@ -151,14 +165,14 @@ export default function App() {
               </div>
 
               {/* Data Feed Section */}
-              <PickingTable data={data} />
+              <PickingTable data={summarizedData} />
             </motion.div>
           )}
         </AnimatePresence>
       </main>
 
       {/* Footer Bar */}
-      <footer className="flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-widest border-t border-slate-200 pt-4">
+      <footer className="flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-widest border-t border-slate-200 pt-2">
         <div className="flex gap-6">
           <span>REPORT ID: PK-SNAP-{lastUpdated.getTime().toString().slice(-6)}</span>
           <span className="hidden md:inline">LOC: OPERATION_CENTER</span>
