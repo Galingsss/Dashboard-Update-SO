@@ -1,0 +1,6 @@
+{
+  "name": "Picking Status Dashboard",
+  "description": "Real-time dashboard for monitoring picking and printing status from Google Sheets data.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
