@@ -24,26 +24,15 @@ export function StatCard({ title, value, icon: Icon, description, trend, classNa
         className
       )}
     >
-      <div className="flex items-start justify-between">
-        <div className="min-w-0 flex-1">
-          <p className="text-[11px] uppercase font-black text-slate-500 tracking-widest mb-1 truncate">{title}</p>
-          <h3 className="text-4xl font-black tracking-tight transition-all truncate">{value}</h3>
-          {(description || trend) && (
-            <div className="flex items-center mt-1 space-x-2">
-              {trend && (
-                <span className={cn(
-                  "text-[10px] font-bold flex items-center shrink-0",
-                  trend.isUp ? "text-emerald-600" : "text-red-600"
-                )}>
-                  {trend.isUp ? '↑' : '↓'} {trend.value}%
-                </span>
-              )}
-              {description && <p className="text-[10px] text-slate-500 font-medium truncate">{description}</p>}
-            </div>
-          )}
+      <div className="flex flex-col items-center justify-center text-center">
+        <div className="flex items-center justify-center gap-2 mb-1 w-full">
+          <div className="bg-slate-50 p-1 rounded-full shrink-0">
+            <Icon className="w-3.5 h-3.5 text-slate-400" />
+          </div>
+          <p className="text-[13px] uppercase font-black text-slate-500 tracking-widest truncate">{title}</p>
         </div>
-        <div className="bg-slate-50 p-1.5 rounded shrink-0 ml-2">
-          <Icon className="w-4 h-4 text-slate-400" />
+        <div className="min-w-0 w-full">
+          <h3 className="text-6xl font-black tracking-tighter transition-all truncate leading-none py-1">{value}</h3>
         </div>
       </div>
     </motion.div>
