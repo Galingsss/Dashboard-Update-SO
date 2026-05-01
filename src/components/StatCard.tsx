@@ -25,14 +25,14 @@ export function StatCard({ title, value, icon: Icon, description, trend, classNa
       )}
     >
       <div className="flex flex-col items-center justify-center text-center">
-        <div className="flex items-center justify-center gap-2 mb-1 w-full">
-          <div className="bg-slate-50 p-1 rounded-full shrink-0">
-            <Icon className="w-3.5 h-3.5 text-slate-400" />
+        <div className="flex items-center justify-center gap-2 mb-2 w-full">
+          <div className="bg-slate-50 p-1.5 rounded-full shrink-0">
+            <Icon className="w-5 h-5 text-slate-400" />
           </div>
-          <p className="text-[13px] uppercase font-black text-slate-500 tracking-widest truncate">{title}</p>
+          <p className="text-xl uppercase font-black text-slate-500 tracking-widest truncate">{title}</p>
         </div>
         <div className="min-w-0 w-full">
-          <h3 className="text-6xl font-black tracking-tighter transition-all truncate leading-none py-1">{value}</h3>
+          <h3 className="text-8xl font-black tracking-tighter transition-all truncate leading-none py-1">{value}</h3>
         </div>
       </div>
     </motion.div>

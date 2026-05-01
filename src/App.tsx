@@ -42,7 +42,10 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const summarizedData = Object.values(data.reduce((acc: Record<string, PickingData>, item) => {
+  const CATEGORY_ORDER = ['1P', '2P', '3P'];
+  const CRITERIA_ORDER = ['ADVANCE', 'HIGH', 'MEDIUM', 'LOW'];
+
+  const summarizedData = (Object.values(data.reduce((acc: Record<string, PickingData>, item) => {
     const key = `${item.kategori}-${item.kriteria}`;
     if (!acc[key]) {
       acc[key] = { ...item };
@@ -54,7 +57,17 @@ export default function App() {
       acc[key].grandTotal += item.grandTotal;
     }
     return acc;
-  }, {} as Record<string, PickingData>)) as PickingData[];
+  }, {} as Record<string, PickingData>)) as PickingData[]).sort((a, b) => {
+    const catA = CATEGORY_ORDER.indexOf(a.kategori.toUpperCase());
+    const catB = CATEGORY_ORDER.indexOf(b.kategori.toUpperCase());
+    
+    if (catA !== catB) return catA - catB;
+    
+    const critA = CRITERIA_ORDER.indexOf(a.kriteria.toUpperCase());
+    const critB = CRITERIA_ORDER.indexOf(b.kriteria.toUpperCase());
+    
+    return critA - critB;
+  });
 
   const totals = data.reduce((acc, item) => ({
     allocated: acc.allocated + item.allocated,

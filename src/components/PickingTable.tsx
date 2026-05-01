@@ -11,7 +11,7 @@ export function PickingTable({ data }: PickingTableProps) {
       <div className="overflow-auto flex-grow">
         <table className="w-full text-center text-lg border-collapse relative">
           <thead className="sticky top-0 z-10">
-            <tr className="bg-slate-800 text-white font-black uppercase border-b border-slate-900">
+            <tr className="bg-slate-800 text-white font-black uppercase border-b border-slate-900 text-xl">
               <th className="p-4 text-left">Category</th>
               <th className="p-4 text-left">Criteria</th>
               <th className="p-4">Allocated</th>
@@ -36,21 +36,20 @@ export function PickingTable({ data }: PickingTableProps) {
                   )}
                 >
                   <td className="p-4 text-left">
-                    <span className="text-4xl font-black text-slate-900 uppercase">
+                    <span className="text-5xl font-black text-slate-900 uppercase">
                       {row.kategori}
                     </span>
                   </td>
                   <td className="p-4 text-left">
-                    <div className="uppercase text-sm font-black text-slate-500 tracking-wider mb-1">Criteria</div>
-                    <div className="uppercase text-xl font-black text-slate-800 tracking-tight leading-tight">
+                    <div className="uppercase text-3xl font-black text-slate-800 tracking-tight leading-tight">
                       {row.kriteria}
                     </div>
                   </td>
-                  <td className="p-4 font-mono text-2xl text-blue-700">{row.allocated}</td>
-                  <td className="p-4 font-mono text-2xl text-emerald-700">{row.pickingConfirmed}</td>
-                  <td className="p-4 font-mono text-2xl text-indigo-700">{row.printed}</td>
-                  <td className="p-4 font-mono text-2xl text-amber-700">{row.waiting}</td>
-                  <td className="p-4 font-mono text-slate-950 font-black text-3xl bg-slate-900/5">{row.grandTotal}</td>
+                  <td className="p-4 font-mono text-4xl text-blue-700">{row.allocated}</td>
+                  <td className="p-4 font-mono text-4xl text-emerald-700">{row.pickingConfirmed}</td>
+                  <td className="p-4 font-mono text-4xl text-indigo-700">{row.printed}</td>
+                  <td className="p-4 font-mono text-4xl text-amber-700">{row.waiting}</td>
+                  <td className="p-4 font-mono text-slate-950 font-black text-5xl bg-slate-900/10">{row.grandTotal}</td>
                 </tr>
               );
             })}
